@@ -23,10 +23,10 @@ namespace BareBones_interpreter
             return text;
         }
 
-
+        static int baseRange = 7;
         static void Interpret(Dictionary<string,int> vars, string[]exe)
         {
-            Print(exe, -1);
+            Print(exe, -1,baseRange);
             Dump(vars);
 
             //in the case of nested while statements, I will use a stack to grab the line # of the most nested while loop first
@@ -47,7 +47,7 @@ namespace BareBones_interpreter
                 Console.WriteLine();
                 Dump(vars, false);
 
-                Print(exe, pc);
+                Print(exe, pc,baseRange);
 
                 string[] cur = exe[pc].Split(new char[] { ' ', ';' }, StringSplitOptions.RemoveEmptyEntries);//the entire current line, split by ' ' and ';'
                 switch (cur[0])//the instruction is always at the start of the line, so index 0
@@ -84,7 +84,7 @@ namespace BareBones_interpreter
                         {
                             whiles.Pop();
                         }
-                            break;
+                        break;
 
                     default:
                         throw new Exception("invalid operand");
@@ -159,9 +159,9 @@ namespace BareBones_interpreter
                     Console.BackgroundColor = ConsoleColor.Black;
                     Console.WriteLine();
                 }
-                else if(range == -1 || (pc+range >= i || pc-range <= i))
+                else if(range == -1 || (pc+range >= i && pc-range <= i))
                 {
-                    if (exe[i][0] == '#')
+                    if (exe[i].Count() > 0 && exe[i][0] == '#')
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine(exe[i]);
