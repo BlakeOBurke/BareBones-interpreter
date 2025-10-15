@@ -12,7 +12,7 @@ namespace BareBones_interpreter
     {
         static void Main(string[] args)
         {
-            Interpret(new Dictionary<string, int>(), InFromFile("bare.txt"));
+            Interpret(new Dictionary<string, int>(), InFromFile("fibbo.txt"));
             Console.ReadLine();
         }
 
@@ -23,7 +23,7 @@ namespace BareBones_interpreter
             return text;
         }
 
-        static int baseRange = 7;
+        static int baseRange = -1;
         static void Interpret(Dictionary<string,int> vars, string[]exe)
         {
             Print(exe, -1,baseRange);
@@ -33,10 +33,9 @@ namespace BareBones_interpreter
             Stack<(int,string)> whiles = new Stack<(int,string)>();
             int pc = 0;
 
-            while(pc != exe.Length)//interpret lines until the program runs out
+            while (pc != exe.Length)//interpret lines until the program runs out
             {
-
-                Console.Clear();
+                //Console.Clear();
                 if (exe[pc] == "" || exe[pc] == null || exe[pc][0] == '#')
                 {
                     pc++;
@@ -138,7 +137,7 @@ namespace BareBones_interpreter
                 Console.Write($"[{key}:{vars[key]}]");
             }
             Console.WriteLine();
-            if(pause) Console.ReadKey();
+            //if(pause) Console.ReadKey();
         }
 
         /// <summary>
